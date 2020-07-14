@@ -1,0 +1,97 @@
+{
+  "name": "application",
+  "productName": "application",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "src/mainProcess/index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development BROWSER=none npm-run-all --parallel react-start electron-start",
+    "start": "cross-env NODE_ENV=production npm-run-all react-build electron-start",
+    "make": "cross-env NODE_ENV=production npm-run-all react-build electron-make",
+    "package": "cross-env NODE_ENV=production npm-run-all react-build electron-package",
+    "electron-start": "electron-forge start",
+    "electron-package": "electron-forge package",
+    "electron-make": "electron-forge make",
+    "electron-publish": "electron-forge publish",
+    "react-lint": "eslint ./src --ext .ts,.js,.tsx",
+    "react-start": "react-app-rewired start",
+    "react-build": "react-app-rewired build",
+    "react-test": "react-app-rewired test",
+    "react-eject": "react-app-rewired eject"
+  },
+  "keywords": [],
+  "author": {
+    "name": "d0kur0",
+    "email": "dev.dokuro@gmail.com"
+  },
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "vk_standalone"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "cross-env": "^7.0.2",
+    "electron-devtools-installer": "^3.1.0",
+    "electron-react-devtools": "^0.5.3",
+    "electron-squirrel-startup": "^1.0.0",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.13.1",
+    "react-app-rewired": "^2.1.6",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "typescript": "~3.7.2"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.52",
+    "@electron-forge/maker-deb": "6.0.0-beta.52",
+    "@electron-forge/maker-rpm": "6.0.0-beta.52",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.52",
+    "@electron-forge/maker-zip": "6.0.0-beta.52",
+    "electron": "9.1.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
