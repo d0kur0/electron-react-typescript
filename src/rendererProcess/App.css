@@ -1,38 +1,139 @@
-.App {
-  text-align: center;
+body {
+  margin: auto;
+  font-family: sans-serif;
+  background-color: rgb(245, 245, 245);
+  color: rgb(44, 44, 44);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.gallery {
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  min-height: calc(100vh - 40px);
+}
+
+.loading {
+  flex: 1 1 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.photos {
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -20px;
+  justify-content: center;
 }
 
-@keyframes App-logo-spin {
-  from {
+.photo {
+  background-color: #fff;
+  box-shadow: 0 0 4px 1px #f1f1f1;
+  transition: 0.4s;
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1 1 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 20px;
+}
+
+.photo:hover {
+  box-shadow: 0 0 4px 1px #d4d4d4;
+}
+
+.photo-title {
+  color: rgb(92, 92, 92);
+  padding: 10px 0;
+}
+
+.photo-id {
+  padding-right: 5px;
+  font-size: 0.7em;
+}
+
+.photo-download-button {
+  margin-top: 15px;
+  border: 1px solid #555;
+  color: #555;
+  background-color: transparent;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.4s;
+}
+
+.photo-download-button:hover {
+  color: #fff;
+  background-color: #555;
+}
+
+.photo-image {
+  cursor: pointer;
+}
+
+.spinner {
+  animation: rotator 1.4s linear infinite;
+}
+
+@keyframes rotator {
+  0% {
     transform: rotate(0deg);
   }
-  to {
-    transform: rotate(360deg);
+
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+.path {
+  stroke-dasharray: 187;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+
+@keyframes colors {
+  0% {
+    stroke: #4285f4;
+  }
+
+  25% {
+    stroke: #de3e35;
+  }
+
+  50% {
+    stroke: #f7c223;
+  }
+
+  75% {
+    stroke: #1b9a59;
+  }
+
+  100% {
+    stroke: #4285f4;
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 187;
+  }
+
+  50% {
+    stroke-dashoffset: 46.75;
+    transform: rotate(135deg);
+  }
+
+  100% {
+    stroke-dashoffset: 187;
+    transform: rotate(450deg);
   }
 }
