@@ -24,6 +24,11 @@ h2 {
   justify-content: center;
 }
 
+.loading svg {
+  width: 64px;
+  height: 64px;
+}
+
 .photos {
   padding-top: 20px;
   display: flex;
@@ -68,11 +73,21 @@ h2 {
   cursor: pointer;
   border-radius: 5px;
   transition: 0.4s;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
 }
 
 .photo-download-button:hover {
   color: #fff;
   background-color: #555;
+}
+
+.photo-download-button svg {
+  height: 20px;
+  width: 20px;
 }
 
 .photo-image {
