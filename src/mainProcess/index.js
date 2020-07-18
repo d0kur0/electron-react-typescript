@@ -1,11 +1,9 @@
 const { app, BrowserWindow, ipcMain, protocol } = require("electron");
 const path = require("path");
 const fs = require("fs");
-const installExtension = require("electron-devtools-installer");
 const url = require("url");
 
 const isDevelopment = process.env.NODE_ENV === "development";
-console.log(`Start in ${["development", "production"][+!isDevelopment]} mode`);
 
 // Register invoke commands for renderer process
 const invokeCommandsPath = path.join(__dirname, "./invokeCommands/");
@@ -14,7 +12,7 @@ const invokeCommandsMap = fs
   .map(file => require(path.join(invokeCommandsPath, file)))
   .flat();
 
-invokeCommandsMap.forEach(command => ipcMain.handle(command.name, command.callback));
+invokeCommandsMap.forEach(command => ipcMain.on(command.name, command.callback));
 
 // eslint-disable-line global-require
 require("electron-squirrel-startup") && app.quit();
@@ -26,6 +24,9 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width,
     height,
+    webPreferences: {
+      nodeIntegration: true,
+    },
   });
 
   mainWindow.setMenu(null);
@@ -54,14 +55,6 @@ const createWindow = () => {
 
   isDevelopment && mainWindow.webContents.openDevTools();
 };
-
-// Install react dev-tools
-isDevelopment &&
-  app.whenReady().then(() => {
-    installExtension(installExtension.REDUX_DEVTOOLS)
-      .then(name => console.log(`Added Extension:  ${name}`))
-      .catch(err => console.log("An error occurred: ", err));
-  });
 
 app.on("ready", createWindow);
 
