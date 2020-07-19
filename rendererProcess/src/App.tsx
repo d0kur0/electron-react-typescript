@@ -30,7 +30,8 @@ export default function App() {
     );
   };
 
-  ipcRenderer.on("download-response", (event, args) => {
+  // TODO: Remove any
+  ipcRenderer.on("download-response", (event: any, args: any) => {
     console.log(args);
 
     setDownloadQueue(queue =>

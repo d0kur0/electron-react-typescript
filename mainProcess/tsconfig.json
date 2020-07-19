@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "allowJs": true,
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "sourceMap": false,
+    "baseUrl": "./src",
+    "outDir": "../.dist/mainProcess",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["../node_modules/*"]
+    }
+  },
+  "include": ["./src/**/*"]
+}

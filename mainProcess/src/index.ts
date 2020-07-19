@@ -1,23 +1,26 @@
-const { app, BrowserWindow, ipcMain, protocol } = require("electron");
-const path = require("path");
-const fs = require("fs");
-const url = require("url");
+import { app, BrowserWindow, ipcMain, protocol } from "electron";
+import { EventHandlers } from "./types/eventHandler";
+import * as path from "path";
+import * as fs from "fs";
+import * as url from "url";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
-// Register invoke commands for renderer process
-const invokeCommandsPath = path.join(__dirname, "./invokeCommands/");
-const invokeCommandsMap = fs
-  .readdirSync(invokeCommandsPath)
-  .map(file => require(path.join(invokeCommandsPath, file)))
+// Register events handlers in IPCMain
+const eventsHandlersPath = path.join(__dirname, "./eventsHandlers/");
+const eventsHandlersMap: EventHandlers = fs
+  .readdirSync(eventsHandlersPath)
+  .map(file => require(path.join(eventsHandlersPath, file)))
   .flat();
 
-invokeCommandsMap.forEach(command => ipcMain.on(command.name, command.callback));
+eventsHandlersMap.forEach(event => ipcMain.on(event.name, event.callback));
 
 // eslint-disable-line global-require
-require("electron-squirrel-startup") && app.quit();
+if (require("electron-squirrel-startup")) {
+  app.quit();
+}
 
-const createWindow = () => {
+const createWindow = (): void => {
   const width = isDevelopment ? 1600 : 1200;
   const height = 800;
 
@@ -30,18 +33,19 @@ const createWindow = () => {
   });
 
   mainWindow.setMenu(null);
+  isDevelopment && mainWindow.webContents.openDevTools();
 
   if (isDevelopment) {
     mainWindow.loadURL("http://localhost:3000");
   } else {
-    const WEB_FOLDER = "../../build/";
+    const WEB_FOLDER = "../../.dist/rendererProcess";
     const PROTOCOL = "file";
 
     protocol.interceptFileProtocol(PROTOCOL, (request, callback) => {
       let url = request.url.substr(PROTOCOL.length + 1);
       url = path.join(__dirname, WEB_FOLDER, url);
       url = path.normalize(url);
-      callback({ path: url });
+      callback(url);
     });
 
     mainWindow.loadURL(
@@ -52,8 +56,6 @@ const createWindow = () => {
       }),
     );
   }
-
-  isDevelopment && mainWindow.webContents.openDevTools();
 };
 
 app.on("ready", createWindow);
